@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Fine-tuning YOLOv11 for Pothole detection</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <noscript
+      ><link rel="stylesheet" href="assets/css/noscript.css"
+    /></noscript>
+  </head>
+  <body class="is-preload">
+    <!-- Wrapper -->
+    <div id="wrapper">
+      <!-- Header -->
+      <header id="header">
+        <div class="inner">
+          <!-- Logo -->
+          <!-- <a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Phantom</span>
+								</a> -->
+
+          <!-- Nav -->
+          <nav>
+            <ul>
+              <li><a href="#menu">Menu</a></li>
+            </ul>
+          </nav>
+        </div>
+      </header>
+
+      <!-- Menu -->
+      <nav id="menu">
+        <h2>Menu</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="FHVHV.html">FHVHV</a></li>
+          <li><a href="cnn-pytorch.html">CNN-Pytorch</a></li>
+          <li><a href="yolo-fine.html">YOLO-Fine</a></li>
+          <li><a href="fraud-detection.html">Fraud Detection</a></li>
+          <li><a href="Weed-classification.html">Weed Classification</a></li>
+        </ul>
+      </nav>
+
+      <!-- Main -->
+      <div id="main">
+        <div class="inner">
+          <h1>NYC FHVHV</h1>
+          <span class="image main"
+            ><img src="images/yolofine/val_batch0_pred.jpg" alt=""
+          /></span>
+          <p>
+            This project analyzes New York City for-hire vehicle (FHV) trip data
+            for May 2022 to uncover insights into trip patterns and compare the
+            usage of different ride-sharing providers, primarily Uber and Lyft.
+            The analysis involves extensive data cleaning, exploratory data
+            analysis (EDA), and the creation of various visualizations to
+            present the findings.
+          </p>
+
+          <h2>Project Summary</h2>
+
+          <article>
+            <h1>Project: Real-Time Pothole Detection with YOLOv11n</h1>
+
+            <h2>Project Overview</h2>
+            <p>
+              This project involved fine-tuning the state-of-the-art
+              <strong>YOLOv11n (nano)</strong> object detection model to
+              identify potholes in road images. The goal was to create a
+              lightweight, efficient model capable of real-time detection,
+              suitable for deployment on edge devices (like in-car systems or
+              drones) to assist with infrastructure monitoring and driver
+              alerts.
+            </p>
+
+            <h2>Objective</h2>
+            <p>
+              To develop a fast and accurate computer vision model that can
+              detect and localize potholes from a single image, serving as a
+              proof-of-concept for automated road maintenance and advanced
+              driver-assistance systems (ADAS).
+            </p>
+
+            <h2>Dataset</h2>
+            <p>
+              The model was trained on a specialized
+              <strong>Pothole Dataset</strong> sourced from Roboflow. An
+              analysis of the dataset (<code>labels.jpg</code>) confirmed:
+            </p>
+            <ul>
+              <li>
+                <strong>Single Class:</strong> The model was trained to detect
+                one class: "pothole".
+              </li>
+              <li>
+                <strong>Dataset Size:</strong> The training set contained
+                approximately 1,600 labeled instances.
+              </li>
+              <li>
+                <strong>Image Samples:</strong> The data consists of real-world
+                road images with potholes of various shapes and sizes, as seen
+                in the training batch sample.
+              </li>
+            </ul>
+            <figure>
+              <img
+                src="images/yolofine/train_batch0.jpg"
+                alt="Sample training images with labeled potholes"
+                style="max-width: 100%; height: auto"
+              />
+              <figcaption>
+                Sample training images with labeled potholes
+              </figcaption>
+            </figure>
+
+            <h2>Methodology & Training</h2>
+            <ul>
+              <li>
+                <strong>Model:</strong> <strong>YOLOv11n</strong>, the smallest
+                and fastest version in the YOLOv11 family, was chosen for its
+                optimal balance of speed and accuracy, making it ideal for
+                real-time applications.
+              </li>
+              <li>
+                <strong>Training:</strong> The model was fine-tuned for
+                <strong>50 epochs</strong>. The training progress
+                (<code>results.jpg</code>) shows a consistent decrease in both
+                training and validation loss (box, class, and DFL losses),
+                indicating that the model learned to generalize well without
+                significant overfitting.
+              </li>
+            </ul>
+            <figure>
+              <img
+                src="images/yolofine/results.png"
+                alt="Chart showing training and validation metrics over 50 epochs"
+                style="max-width: 100%; height: auto"
+              />
+              <figcaption>
+                Chart showing training and validation metrics over 50 epochs
+              </figcaption>
+            </figure>
+
+            <h2>Results & Evaluation</h2>
+            <p>
+              The model's performance was evaluated using standard object
+              detection metrics on a held-out validation set. The results
+              demonstrate a highly effective and well-balanced detector.
+            </p>
+
+            <h3>Key Performance Metrics</h3>
+            <p>Based on the final training epoch and evaluation curves:</p>
+            <ul>
+              <li>
+                <strong>mAP@.5 (mean Average Precision at 50% IoU):</strong>
+                <strong>83.0%</strong>
+              </li>
+              <li>
+                <strong
+                  >mAP@.5-.95 (mean Average Precision, 50%-95% IoU):</strong
+                >
+                <strong>41.0%</strong>
+              </li>
+              <li><strong>Precision:</strong> <strong>86.4%</strong></li>
+              <li><strong>Recall:</strong> <strong>70.1%</strong></li>
+            </ul>
+
+            <h3>Precision-Recall (PR) Curve</h3>
+            <p>
+              The PR curve (<code>BoxPR_curve.png</code>) visualizes the
+              trade-off between precision and recall for the "pothole" class.
+              The large area under the curve (AUC), which corresponds to the
+              <strong>mAP@.5 of 0.83</strong>, confirms the model's robustness.
+              It maintains high precision even as recall increases, which is
+              characteristic of a high-quality detector.
+            </p>
+            <figure>
+              <img
+                src="images/yolofine/BoxPR_curve.png"
+                alt="Precision-Recall curve for the 'pothole' class"
+                style="max-width: 100%; height: auto"
+              />
+              <figcaption>
+                Precision-Recall curve for the 'pothole' class
+              </figcaption>
+            </figure>
+
+            <h3>Confusion Matrix</h3>
+            <p>
+              The normalized confusion matrix
+              (<code>confusion_matrix_normalized.png</code>) provides a clear
+              breakdown of the model's detection accuracy on the validation set.
+            </p>
+            <ul>
+              <li>
+                <strong>Correct Detections (True Positives):</strong> The model
+                successfully identified <strong>70%</strong> of all actual
+                potholes.
+              </li>
+              <li>
+                <strong>Missed Detections (False Negatives):</strong> The model
+                missed <strong>30%</strong> of the potholes (classifying them as
+                background).
+              </li>
+              <li>
+                <strong>Incorrect Detections (False Positives):</strong> A low
+                "background FP" rate of <strong>0.16</strong> indicates that the
+                model rarely made incorrect "pothole" predictions on background
+                objects, which speaks to its high precision.
+              </li>
+            </ul>
+            <figure>
+              <img
+                src="images/yolofine/confusion_matrix_normalized.png"
+                alt="Normalized confusion matrix for pothole detection"
+                style="max-width: 100%; height: auto"
+              />
+              <figcaption>
+                Normalized confusion matrix for pothole detection
+              </figcaption>
+            </figure>
+
+            <h2>Conclusion</h2>
+            <p>
+              This project successfully demonstrates the power of the new
+              YOLOv11n model for fine-tuning on a custom, real-world dataset.
+              The resulting model achieves a strong balance of precision (86.4%)
+              and recall (70.1%), culminating in a
+              <strong>mAP@.5 of 83%</strong>.
+            </p>
+            <p>
+              This lightweight and efficient model is a strong candidate for
+              real-world deployment in applications requiring rapid and reliable
+              road hazard detection.
+            </p>
+
+            <hr />
+
+            <p>
+              This video provides a great tutorial on how to train a YOLOv11
+              model, similar to the process you've just completed.<br />
+              <a href="https://www.youtube.com/watch?v=etjkjZoG2F0"
+                >YOLOv11 Custom Training Guide</a
+              >
+            </p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer id="footer">
+        <div class="inner">
+          <section>
+            <h2>Get in touch</h2>
+            <form method="post" action="#">
+              <div class="fields">
+                <div class="field half">
+                  <input type="text" name="name" id="name" placeholder="Name" />
+                </div>
+                <div class="field half">
+                  <input
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="Email"
+                  />
+                </div>
+                <div class="field">
+                  <textarea
+                    name="message"
+                    id="message"
+                    placeholder="Message"
+                  ></textarea>
+                </div>
+              </div>
+              <ul class="actions">
+                <li><input type="submit" value="Send" class="primary" /></li>
+              </ul>
+            </form>
+          </section>
+          <section>
+            <h2>Follow</h2>
+            <ul class="icons">
+              <li>
+                <a href="#" class="icon brands style2 fa-twitter"
+                  ><span class="label">Twitter</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-facebook-f"
+                  ><span class="label">Facebook</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-instagram"
+                  ><span class="label">Instagram</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-dribbble"
+                  ><span class="label">Dribbble</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-github"
+                  ><span class="label">GitHub</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon brands style2 fa-500px"
+                  ><span class="label">500px</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon solid style2 fa-phone"
+                  ><span class="label">Phone</span></a
+                >
+              </li>
+              <li>
+                <a href="#" class="icon solid style2 fa-envelope"
+                  ><span class="label">Email</span></a
+                >
+              </li>
+            </ul>
+          </section>
+          <ul class="copyright">
+            <li>&copy; Untitled. All rights reserved</li>
+            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+          </ul>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
